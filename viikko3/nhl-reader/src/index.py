@@ -1,12 +1,13 @@
 import requests
 from player import Player
+import datetime
 
 def main():
     url = "https://studies.cs.helsinki.fi/nhlstats/2021-22/players"
     response = requests.get(url).json()
 
-    print("JSON-muotoinen vastaus:")
-    print(response)
+    #print("JSON-muotoinen vastaus:")
+    #print(response)
 
     players = []
 
@@ -17,9 +18,9 @@ def main():
 
         players.append(player)
 
-    print("Players from FIN:")
+    print(f"Players from FIN {datetime.datetime.now()}:\n")
 
-    for player in players:
+    for player in sorted(players, key=lambda x: x.points, reverse=True):
         if player.nationality == "FIN":
             print(player)
         
