@@ -12,7 +12,7 @@ Login With Incorrect Password
     Output Should Contain  Invalid username or password
 
 Login With Nonexistent Username
-    Input Credentials  kalle  kalle
+    Input Credentials  kissa  kalle123
     Output Should Contain  Invalid username or password
 
 *** Keywords ***
