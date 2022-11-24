@@ -47,7 +47,7 @@ class TestKauppa(unittest.TestCase):
         self.kauppa.lisaa_koriin(1)
         self.kauppa.tilimaksu("pekka", "12345")
 
-        # varmistetaan, että metodia tilisiirto on kutsuttu
+        # varmistetaan, että pankin metodia tilisiirto on kutsuttu
         self.pankki_mock.tilisiirto.assert_called()
         # toistaiseksi ei välitetä kutsuun liittyvistä argumenteista
 
@@ -58,7 +58,7 @@ class TestKauppa(unittest.TestCase):
         self.kauppa.lisaa_koriin(1)
         self.kauppa.tilimaksu("pekka", "12345")
 
-        # varmistetaan, että metodia tilisiirto on kutsuttu oikeilla parametreilla:
+        # varmistetaan, että pankin metodia tilisiirto on kutsuttu oikeilla parametreilla:
         # - oikea asiakas, tilinumero ja summa
         self.pankki_mock.tilisiirto.assert_called_with("pekka", ANY, "12345", "33333-44455", 5)
 
@@ -70,7 +70,7 @@ class TestKauppa(unittest.TestCase):
         self.kauppa.lisaa_koriin(2)
         self.kauppa.tilimaksu("pekka", "12345")
 
-        # varmistetaan, että metodia tilisiirto on kutsuttu oikeilla parametreilla:
+        # varmistetaan, että pankin metodia tilisiirto on kutsuttu oikeilla parametreilla:
         # - oikea asiakas, tilinumero ja summa
         self.pankki_mock.tilisiirto.assert_called_with("pekka", ANY, "12345", "33333-44455", 7)
 
@@ -82,7 +82,7 @@ class TestKauppa(unittest.TestCase):
         self.kauppa.lisaa_koriin(2)
         self.kauppa.tilimaksu("pekka", "12345")
 
-        # varmistetaan, että metodia tilisiirto on kutsuttu oikeilla parametreilla:
+        # varmistetaan, että pankin metodia tilisiirto on kutsuttu oikeilla parametreilla:
         # - oikea asiakas, tilinumero ja summa
         self.pankki_mock.tilisiirto.assert_called_with("pekka", ANY, "12345", "33333-44455", 4)
         
@@ -94,6 +94,56 @@ class TestKauppa(unittest.TestCase):
         self.kauppa.lisaa_koriin(3)
         self.kauppa.tilimaksu("pekka", "12345")
 
-        # varmistetaan, että metodia tilisiirto on kutsuttu oikeilla parametreilla:
+        # varmistetaan, että pankin metodia tilisiirto on kutsuttu oikeilla parametreilla:
         # - oikea asiakas, tilinumero ja summa
         self.pankki_mock.tilisiirto.assert_called_with("pekka", ANY, "12345", "33333-44455", 2)
+        
+        
+    def test_metodi_aloita_asiointi_nollaa_edellisen_ostoksen_tiedot(self):
+        # ensimmäinen asiakas
+        self.kauppa.aloita_asiointi()
+        self.kauppa.lisaa_koriin(2)
+        self.kauppa.tilimaksu("maija", "1234")
+        
+        # toinen asiakas
+        self.kauppa.aloita_asiointi()
+        self.kauppa.lisaa_koriin(1)
+        self.kauppa.tilimaksu("pekka", "12345")
+        
+        self.pankki_mock.tilisiirto.assert_called_with(ANY, ANY, ANY, ANY, 5)
+        
+        
+    def test_kauppa_pyytaa_uuden_viitenumeron_jokaiselle_maksutapahtumalle(self):
+        # määritellään että metodi palauttaa ensimmäisellä kutsulla 1, toisella 2 ja kolmannella 3
+        self.viitegeneraattori_mock.uusi.side_effect = [1, 2, 3]
+    
+        self.kauppa.aloita_asiointi()
+        self.kauppa.lisaa_koriin(1)
+        self.kauppa.tilimaksu("maija", "1111")
+
+        # varmistetaan, että nyt käytössä ensimmäinen viite
+        self.pankki_mock.tilisiirto.assert_called_with(ANY, 1, ANY, ANY, ANY)
+
+        self.kauppa.aloita_asiointi()
+        self.kauppa.lisaa_koriin(2)
+        self.kauppa.tilimaksu("maija", "1111")
+
+        # varmistetaan, että nyt käytössä toinen viite
+        self.pankki_mock.tilisiirto.assert_called_with(ANY, 2, ANY, ANY, ANY)
+
+        self.kauppa.aloita_asiointi()
+        self.kauppa.lisaa_koriin(1)
+        self.kauppa.tilimaksu("maija", "1111")
+
+        # varmistetaan, että nyt käytössä kolmas viite
+        self.pankki_mock.tilisiirto.assert_called_with(ANY, 3, ANY, ANY, ANY)
+
+    
+    def test_metodi_poista_tuote_korista_loppusumma_oikein(self):
+        self.kauppa.aloita_asiointi()
+        self.kauppa.lisaa_koriin(2)
+        self.kauppa.lisaa_koriin(1)
+        self.kauppa.poista_korista(2)
+        self.kauppa.tilimaksu("maija", "1234")
+        
+        self.pankki_mock.tilisiirto.assert_called_with(ANY, ANY, ANY, ANY, 5)
