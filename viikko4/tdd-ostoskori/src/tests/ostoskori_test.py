@@ -91,5 +91,7 @@ class TestOstoskori(unittest.TestCase):
 
         # testaa että metodin palauttaman listan pituus 2
         self.assertEqual(len(ostokset), 2)
+        
+    
 
         
