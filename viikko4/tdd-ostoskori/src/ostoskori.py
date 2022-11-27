@@ -42,7 +42,7 @@ class Ostoskori:
 
     def tyhjenna(self):
         # tyhjentää ostoskorin
-        pass
+        self.sisalto = []
 
     def ostokset(self):
         # palauttaa listan jossa on korissa olevat ostos-oliot
