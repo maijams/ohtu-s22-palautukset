@@ -1,4 +1,4 @@
-#Retrospektiivitekniikoita
+# Retrospektiivitekniikoita
 
 ## Start, Stop, Continue, More of, Less of Wheel
 Prosessi alkaa listaamalla viisi kategoriaa: ”start”, ”stop”, ”continue”, ”more of” ja ”less of” (voidaan esim. piirtää ympyrä ja jakaa se viiteen sektoriin). Kysytään seuraavat kysymykset: Mitä sellaista meidän pitäisi alkaa tekemään jota emme vielä tee? Minkä tekeminen pitäisi lopettaa, mikä ei tuota lisäarvoa tai toimii hidasteena? Mikä toimii ja mitä halutaan jatkaa? Mitä pitäisi tehdä vähemmän, mitä enemmän? Kirjataan kysymyksistä heränneet kommentit ylös ja keskustellaan yhdessä mitä muutoksia halutaan toteuttaa.  Kesto 10 – 25 min riippuen ryhmäkoosta.
