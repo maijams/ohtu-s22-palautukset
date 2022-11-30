@@ -19,7 +19,7 @@ class TennisGame:
         
     def get_score(self):
         score = ""
-        scores = {
+        score_terms = {
             0: "Love", 
             1: "Fifteen", 
             2: "Thirty", 
@@ -28,7 +28,7 @@ class TennisGame:
         
         if self.deuce():
             if self.player1_points in range(0, 4):
-                score = scores[self.player1_points] + "-All"
+                score = score_terms[self.player1_points] + "-All"
             else:
                 score = "Deuce"
         elif self.points_over_four():
@@ -43,6 +43,6 @@ class TennisGame:
             else:
                 score = "Win for player2"
         else:
-            score = scores[self.player1_points] + "-" + scores[self.player2_points]
+            score = score_terms[self.player1_points] + "-" + score_terms[self.player2_points]
 
         return score
