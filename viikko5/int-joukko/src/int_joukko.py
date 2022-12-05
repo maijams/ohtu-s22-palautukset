@@ -1,10 +1,3 @@
-""" 
-- Poista copypaste
-- Vähennä monimutkaisuutta
-- Anna muuttujille selkeät nimet
-- Tee metodeista pienempiä ja hyvän koheesion omaavia 
-"""
-
 class IntJoukko:
     def __init__(self, kapasiteetti=None, kasvatuskoko=None):
         self.ljono = []
