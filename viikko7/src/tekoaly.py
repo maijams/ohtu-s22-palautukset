@@ -3,8 +3,8 @@ class Tekoaly:
         self._siirto = 0
 
     def anna_siirto(self):
-        self._siirto = self._siirto + 1
-        self._siirto = self._siirto % 3
+        self._siirto += 1
+        self._siirto %= 3
 
         if self._siirto == 0:
             return "k"
@@ -12,7 +12,3 @@ class Tekoaly:
             return "p"
         else:
             return "s"
-
-    def aseta_siirto(self, siirto):
-        # ei tehdä mitään
-        pass

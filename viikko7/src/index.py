@@ -14,27 +14,17 @@ def main():
 
         vastaus = input()
 
-        if vastaus.endswith("a"):
+        if vastaus in ["a", "b", "c"]:
+            if vastaus == "a":
+                peli = KPSPelaajaVsPelaaja()
+            elif vastaus == "b":
+                peli = KPSTekoaly()
+            elif vastaus == "c":
+                peli = KPSParempiTekoaly()
             print(
                 "Peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s"
             )
-
-            kaksinpeli = KPSPelaajaVsPelaaja()
-            kaksinpeli.pelaa()
-        elif vastaus.endswith("b"):
-            print(
-                "Peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s"
-            )
-
-            yksinpeli = KPSTekoaly()
-            yksinpeli.pelaa()
-        elif vastaus.endswith("c"):
-            print(
-                "Peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s"
-            )
-
-            haastava_yksinpeli = KPSParempiTekoaly()
-            haastava_yksinpeli.pelaa()
+            peli.pelaa()
         else:
             break
 
